@@ -12,6 +12,9 @@ public class Example : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
 
+    private enum MovementState {idle, running, jumping, falling};
+    private MovementState movementState;
+
 
     private void Start()
     {
@@ -35,16 +38,29 @@ public class Example : MonoBehaviour
 
     private void UpdateAnimationState()
     {
+        MovementState state;
+
         if (dirX > 0f){
-            anim.SetBool("running",true);
+            state = MovementState.running;
             spriteRenderer.flipX = false;
         }
         else if (dirX < 0f){
-            anim.SetBool("running",true);
-            spriteRenderer.flipX = true;
+            state = MovementState.running;
+            spriteRenderer.flipX = true; 
         }
-        else{
-            anim.SetBool("running",false);
+        else {
+            state = MovementState.idle;
         }
+
+        if (rb.velocity.y > .1f) 
+        {
+            state = MovementState.jumping;
+        }
+        else if (rb.velocity.y < -.1f) 
+        {
+            state = MovementState.falling;
+        }
+
+        anim.SetInteger("movementState", (int)state);
     }
 }
