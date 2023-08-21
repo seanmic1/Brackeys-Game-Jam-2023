@@ -22185,6 +22185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  jumpHeight: 10
 --- !u!95 &1958684049
 Animator:
   serializedVersion: 5

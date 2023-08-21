@@ -10,11 +10,14 @@ public class Example : MonoBehaviour
     private float dirX;
     private Rigidbody2D rb;
     private Animator anim;
+    private SpriteRenderer spriteRenderer;
+
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -34,10 +37,11 @@ public class Example : MonoBehaviour
     {
         if (dirX > 0f){
             anim.SetBool("running",true);
+            spriteRenderer.flipX = false;
         }
         else if (dirX < 0f){
             anim.SetBool("running",true);
-            spriteRenderer.
+            spriteRenderer.flipX = true;
         }
         else{
             anim.SetBool("running",false);
