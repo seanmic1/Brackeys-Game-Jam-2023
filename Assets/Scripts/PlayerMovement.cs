@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 
-public class Example : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float speed;
     public float jumpHeight;
@@ -11,6 +12,9 @@ public class Example : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer spriteRenderer;
+    private BoxCollider2D boxCollider2D;
+
+    [SerializeField] private LayerMask jumpableGround;
 
     private enum MovementState {idle, running, jumping, falling};
     private MovementState movementState;
@@ -21,6 +25,7 @@ public class Example : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     void Update()
@@ -28,7 +33,7 @@ public class Example : MonoBehaviour
         dirX = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(dirX * speed, rb.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.Space)){
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()){
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         }
 
@@ -62,5 +67,10 @@ public class Example : MonoBehaviour
         }
 
         anim.SetInteger("movementState", (int)state);
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics2D.BoxCast(boxCollider2D.bounds.center,boxCollider2D.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
 }
