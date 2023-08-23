@@ -30,6 +30,9 @@ public class BulletScript : MonoBehaviour
             bulletRb.velocity = new Vector2(speed, 0);  
         }
 
-        
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        Destroy(gameObject);
     }
 }
