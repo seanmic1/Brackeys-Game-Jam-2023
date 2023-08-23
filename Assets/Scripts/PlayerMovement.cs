@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.UI;
 using UnityEngine;
 
@@ -11,10 +13,11 @@ public class Player : MonoBehaviour
     private float dirX;
     private Rigidbody2D rb;
     private Animator anim;
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
 
     [SerializeField] private LayerMask jumpableGround;
+    public GameObject bullet;
 
     private enum MovementState {idle, running, jumping, falling};
     private MovementState movementState;
@@ -37,8 +40,30 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
         }
 
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            shootBullet();
+        }
+
         UpdateAnimationState();
 
+    }
+
+    private void shootBullet()
+    {
+        GameObject myBullet = Instantiate(bullet, transform.position, transform.rotation);
+        SpriteRenderer bulletSR = myBullet.GetComponent<SpriteRenderer>();
+        bulletSR.flipX = spriteRenderer.flipX;
+
+        if (spriteRenderer.flipX)
+        {
+            myBullet.transform.position = new Vector2(myBullet.transform.position.x - 1, myBullet.transform.position.y);
+        }
+        else
+        {
+            myBullet.transform.position = new Vector2(myBullet.transform.position.x + 1, myBullet.transform.position.y);
+        }
+         
     }
 
     private void UpdateAnimationState()
