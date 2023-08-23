@@ -57,11 +57,11 @@ public class Player : MonoBehaviour
 
         if (spriteRenderer.flipX)
         {
-            myBullet.transform.position = new Vector2(myBullet.transform.position.x - 1, myBullet.transform.position.y);
+            myBullet.transform.position = new Vector2(myBullet.transform.position.x - 1, myBullet.transform.position.y - 0.3f);
         }
         else
         {
-            myBullet.transform.position = new Vector2(myBullet.transform.position.x + 1, myBullet.transform.position.y);
+            myBullet.transform.position = new Vector2(myBullet.transform.position.x + 1, myBullet.transform.position.y - 0.3f);
         }
          
     }
