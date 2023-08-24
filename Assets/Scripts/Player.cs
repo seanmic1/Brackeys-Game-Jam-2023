@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
     private enum MovementState {idle, running, jumping, falling};
     private MovementState movementState;
 
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -98,4 +97,7 @@ public class Player : MonoBehaviour
     {
         return Physics2D.BoxCast(boxCollider2D.bounds.center,boxCollider2D.bounds.size, 0f, Vector2.down, .1f, jumpableGround);
     }
+
+
+
 }

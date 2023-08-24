@@ -10,6 +10,7 @@ public class Baddie : MonoBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D box;
     [SerializeField] private float speed;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +26,9 @@ public class Baddie : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("entered trigger");
         if (other.CompareTag("Bullet"))
         {
+            GameManager.instance.AddEnemyKillCount();
             Destroy(gameObject);
         }
     }
